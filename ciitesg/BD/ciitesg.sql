@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-12-2021 a las 04:07:44
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.2
+-- Tiempo de generación: 17-02-2022 a las 22:10:49
+-- Versión del servidor: 10.4.22-MariaDB
+-- Versión de PHP: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -41,8 +40,8 @@ CREATE TABLE `autores` (
 --
 
 INSERT INTO `autores` (`idAutor`, `nomAutor`, `primerApellidoA`, `segundoApellidoA`, `nacionalidad`) VALUES
-(1, 'Alberto', 'DOMINGO', 'AJENJO', 'Mexicano'),
-(2, 'Louis', 'LEITHOLD', 'N/A', 'USA');
+(1, 'Juan', 'Pérez', 'López', 'Mexicana'),
+(2, 'Leithold', 'Jasson', 'n/a', 'EU');
 
 -- --------------------------------------------------------
 
@@ -63,9 +62,11 @@ CREATE TABLE `carreras` (
 INSERT INTO `carreras` (`idCarrera`, `nomCarrera`, `descCarrera`) VALUES
 (1, 'Sistemas Computacionales', 'Ingeniería en Sistemas Computacionales'),
 (2, 'Alimentarias', 'Ingeniería en Industrias Alimentarias'),
-(3, 'Mecatrónica', 'Ingeniería Mecatrónica'),
+(3, 'Mecatrónica', 'Ingeniería en Mecatrónica'),
 (4, 'Industrial', 'Ingeniería Industrial'),
-(5, 'Todas', 'Para tronco común');
+(5, 'Gestión', 'Nueva carrera'),
+(6, 'Tronco', 'Aplica a todas las carreras'),
+(8, 'N/A', 'Fuera del área académica');
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,7 @@ INSERT INTO `carreras` (`idCarrera`, `nomCarrera`, `descCarrera`) VALUES
 CREATE TABLE `centroinformacion` (
   `idCentroi` int(5) NOT NULL,
   `nombreCentroi` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `dirCentroi` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `dircentroi` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `descCentroi` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -84,8 +85,8 @@ CREATE TABLE `centroinformacion` (
 -- Volcado de datos para la tabla `centroinformacion`
 --
 
-INSERT INTO `centroinformacion` (`idCentroi`, `nombreCentroi`, `dirCentroi`, `descCentroi`) VALUES
-(1, 'Centro de Información ITESG', 'Puentecillas', 'Biblioteca ITESG');
+INSERT INTO `centroinformacion` (`idCentroi`, `nombreCentroi`, `dircentroi`, `descCentroi`) VALUES
+(1, 'Centro de Información ITESG', 'Carretera Guanajuato a Puentecillas km 10.5 Predio El Carmen', 'Trabajo');
 
 -- --------------------------------------------------------
 
@@ -95,7 +96,7 @@ INSERT INTO `centroinformacion` (`idCentroi`, `nombreCentroi`, `dirCentroi`, `de
 
 CREATE TABLE `colecciones` (
   `idColeccion` int(5) NOT NULL,
-  `nomColeccion` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `nomColeccion` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `descColeccion` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `idCentroi` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -105,10 +106,11 @@ CREATE TABLE `colecciones` (
 --
 
 INSERT INTO `colecciones` (`idColeccion`, `nomColeccion`, `descColeccion`, `idCentroi`) VALUES
-(1, 'Acervo general', 'Libros especializados de las ingenierías', 1),
-(2, 'Tesis', 'Tesis de egresados ITESG', 1),
-(3, 'Acervo de consulta', 'Diccionarios, enciclopedias', 1),
-(4, 'Acervo digital', 'Cd-ROM, artículos, hojas sueltas', 1);
+(1, 'Acervo', 'Textos escolares, obras literarias, legislación.', 1),
+(2, 'Tesis', 'De Licenciatura.', 1),
+(3, 'Revistas', 'Divulgación científica.', 1),
+(4, 'Digital', 'CD Rom: complementos de libros, libros digitales, ', 1),
+(5, 'Didácticos', 'Ajedrez, scrable.', 1);
 
 -- --------------------------------------------------------
 
@@ -128,8 +130,8 @@ CREATE TABLE `editoriales` (
 --
 
 INSERT INTO `editoriales` (`idEditorial`, `nomEditorial`, `paisEditorial`, `descEditorial`) VALUES
-(1, 'Alfaomega', 'México', 'Alfaomega-Rama'),
-(2, 'Oxford', 'USA', 'Oxford Univertsity Press');
+(1, 'Omega', 'México', 'Alfa Omega'),
+(2, 'Prentice Hall', 'EU', 'AlgoO');
 
 -- --------------------------------------------------------
 
@@ -144,7 +146,7 @@ CREATE TABLE `libros` (
   `noAdquiLibro` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `noClasificLibro` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `noEjemplarL` int(5) NOT NULL,
-  `tomoLibro` int(5) NOT NULL,
+  `tomoLibro` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `descLibro` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `estatusLibro` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `disponibleLibro` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
@@ -160,8 +162,7 @@ CREATE TABLE `libros` (
 --
 
 INSERT INTO `libros` (`idLibro`, `fechaLibro`, `tipoLibro`, `noAdquiLibro`, `noClasificLibro`, `noEjemplarL`, `tomoLibro`, `descLibro`, `estatusLibro`, `disponibleLibro`, `edicionLibro`, `idColeccion`, `idTitulo`, `idEditorial`, `idCarrera`) VALUES
-(1, '2021-12-01', 'Adquirido', 'BITESG201100001', 'HD69.D2005', 1, 1, 'Mexico : Alfaomega-Rama c2000, greimp. 2006', 'Catalogado', 'Si', '1ra.', 1, 1, 1, 5),
-(2, '2021-12-02', 'Adquirido', 'BITESG201300005', 'QA303.L4282012', 1, 1, 'Calculo 7', 'Catalogado', 'Si', '1ra.', 1, 2, 2, 5);
+(1, '2022-02-01', 'Adquirido', '0', '0', 1, '1', 'Fundamento de química', 'Recepción', 'Si', '1', 1, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -180,8 +181,7 @@ CREATE TABLE `libro_autor` (
 --
 
 INSERT INTO `libro_autor` (`idLibroAutor`, `idLibro`, `idAutor`) VALUES
-(1, 1, 1),
-(2, 2, 2);
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -191,7 +191,7 @@ INSERT INTO `libro_autor` (`idLibroAutor`, `idLibro`, `idAutor`) VALUES
 
 CREATE TABLE `permisos` (
   `idPermiso` int(5) NOT NULL,
-  `nombre` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `usuario` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `tipo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `pw` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
@@ -204,8 +204,8 @@ CREATE TABLE `permisos` (
 --
 
 INSERT INTO `permisos` (`idPermiso`, `nombre`, `usuario`, `tipo`, `pw`, `foto`, `idCentroi`) VALUES
-(1, 'Luz Zendejas', 'LEI', 'Administrador', '12345678', 'images/FotoPerfil.png', 1),
-(2, 'Servicio', 'ssocial', 'Administrador', '87654321', 'images/FotoPerfil.png', 1);
+(1, 'Luz', 'LEI', 'Administrador', '12345678', 'images/FotoPerfil.png', 1),
+(2, 'Ejemplo', 'Ejemplo', 'Editor', '159753', 'images/El.png', 1);
 
 -- --------------------------------------------------------
 
@@ -215,20 +215,12 @@ INSERT INTO `permisos` (`idPermiso`, `nombre`, `usuario`, `tipo`, `pw`, `foto`, 
 
 CREATE TABLE `solicitudes` (
   `idSolicitud` int(5) NOT NULL,
-  `folioSolicitud` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `folioSolicitud` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `fechaSolicitud` date NOT NULL,
   `tipoSolicitud` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `estatusSolicitud` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `estatusSolicitud` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `vigenciaSolicitud` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `solicitudes`
---
-
-INSERT INTO `solicitudes` (`idSolicitud`, `folioSolicitud`, `fechaSolicitud`, `tipoSolicitud`, `estatusSolicitud`, `vigenciaSolicitud`) VALUES
-(1, '001-21', '2021-12-01', 'Primera vez', 'En proceso', '2022-12-31'),
-(2, '002-21', '2021-12-02', 'Primera vez', 'En proceso', '2022-12-31');
 
 -- --------------------------------------------------------
 
@@ -261,8 +253,9 @@ CREATE TABLE `titulos` (
 --
 
 INSERT INTO `titulos` (`idTitulo`, `nomTitulo`, `descTitulo`, `consecutivoT`, `existenciaT`) VALUES
-(1, 'Dirección y Gestión de Proyectos, Un enfoque práct', 'Mexico : Alfaomega-Rama c2000, greimp. 2006', 1, 1),
-(2, 'Calculo 7', 'Cálculo', 2, 1);
+(1, 'Química 1', 'Fundamentos de química', 1, 0),
+(2, 'Algebra', 'Fundamentos de álgebra', 2, 0),
+(3, 'Mecánica', 'Mecánica de materiales', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -272,18 +265,17 @@ INSERT INTO `titulos` (`idTitulo`, `nomTitulo`, `descTitulo`, `consecutivoT`, `e
 
 CREATE TABLE `usuarios` (
   `idUsuario` int(5) NOT NULL,
-  `nomUsuario` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `paternoUsuario` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `maternoUsuario` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `numUsuario` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `nomUsuario` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `paternoUsuario` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `maternoUsuario` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `noControl` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `tipoUsuario` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `idCarrera` int(5) NOT NULL,
   `mailUsuario` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `curpUsuario` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `telUsuario` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `estatusUsuario` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `telUsuario` int(10) NOT NULL,
+  `estatusUsuario` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `dirUsuario` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `fotoUsuario` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `idCentroi` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -291,9 +283,9 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`idUsuario`, `nomUsuario`, `paternoUsuario`, `maternoUsuario`, `numUsuario`, `tipoUsuario`, `idCarrera`, `mailUsuario`, `curpUsuario`, `telUsuario`, `estatusUsuario`, `dirUsuario`, `fotoUsuario`, `idCentroi`) VALUES
-(1, 'JUANA KARINA', 'MORENO', 'CEDILLO', '20110001', 'Estudiante', 4, 'karina@itesg.edu.mx', 'ABCDEFG', '4731234567', 'Regular', 'Algo', 'images/FotoPerfil.png', 1),
-(2, 'ALEJANDRO', 'RODRIGUEZ', 'ESCAMILLA', '20110003', 'Estudiante', 3, 'alex@itesg.edu.mx', 'ABCDEFG', '4731017155', 'Regular', 'Algo', 'images/FotoPerfil.png', 1);
+INSERT INTO `usuarios` (`idUsuario`, `nomUsuario`, `paternoUsuario`, `maternoUsuario`, `noControl`, `tipoUsuario`, `idCarrera`, `mailUsuario`, `curpUsuario`, `telUsuario`, `estatusUsuario`, `dirUsuario`, `idCentroi`) VALUES
+(1, 'Luz', 'Zendejas', 'Chávez', '336', 'Estudiante', 1, 'lzendejas@itesg.edu.mx', 'dfdfdfvfdg', 1851201, 'Regular', 'Carr. Gto. Marfil km 10.5', 1),
+(2, 'Sandra', 'Salas', 'Torres', '337', 'Editor', 6, 'difusion@itesg.edu.mx', 'ABC123', 2147483647, 'Regular', 'Guanajuato, Gto.', 1);
 
 --
 -- Índices para tablas volcadas
@@ -336,9 +328,9 @@ ALTER TABLE `editoriales`
 ALTER TABLE `libros`
   ADD PRIMARY KEY (`idLibro`),
   ADD KEY `idColeccion` (`idColeccion`),
-  ADD KEY `idCarrera` (`idCarrera`),
   ADD KEY `idTitulo` (`idTitulo`),
-  ADD KEY `idEditorial` (`idEditorial`);
+  ADD KEY `idEditorial` (`idEditorial`),
+  ADD KEY `idCarrera` (`idCarrera`);
 
 --
 -- Indices de la tabla `libro_autor`
@@ -397,7 +389,7 @@ ALTER TABLE `autores`
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `idCarrera` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idCarrera` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `centroinformacion`
@@ -409,7 +401,7 @@ ALTER TABLE `centroinformacion`
 -- AUTO_INCREMENT de la tabla `colecciones`
 --
 ALTER TABLE `colecciones`
-  MODIFY `idColeccion` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idColeccion` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `editoriales`
@@ -421,13 +413,13 @@ ALTER TABLE `editoriales`
 -- AUTO_INCREMENT de la tabla `libros`
 --
 ALTER TABLE `libros`
-  MODIFY `idLibro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idLibro` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `libro_autor`
 --
 ALTER TABLE `libro_autor`
-  MODIFY `idLibroAutor` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idLibroAutor` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -439,7 +431,7 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  MODIFY `idSolicitud` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idSolicitud` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitudusuario`
@@ -451,7 +443,7 @@ ALTER TABLE `solicitudusuario`
 -- AUTO_INCREMENT de la tabla `titulos`
 --
 ALTER TABLE `titulos`
-  MODIFY `idTitulo` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idTitulo` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -467,43 +459,43 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `colecciones`
 --
 ALTER TABLE `colecciones`
-  ADD CONSTRAINT `colecciones_ibfk_1` FOREIGN KEY (`idCentroi`) REFERENCES `centroinformacion` (`idCentroi`);
+  ADD CONSTRAINT `colecciones_ibfk_1` FOREIGN KEY (`idCentroi`) REFERENCES `centroinformacion` (`idCentroi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `libros`
 --
 ALTER TABLE `libros`
-  ADD CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`idColeccion`) REFERENCES `colecciones` (`idColeccion`),
-  ADD CONSTRAINT `libros_ibfk_2` FOREIGN KEY (`idCarrera`) REFERENCES `carreras` (`idCarrera`),
-  ADD CONSTRAINT `libros_ibfk_3` FOREIGN KEY (`idTitulo`) REFERENCES `titulos` (`idTitulo`),
-  ADD CONSTRAINT `libros_ibfk_4` FOREIGN KEY (`idEditorial`) REFERENCES `editoriales` (`idEditorial`);
+  ADD CONSTRAINT `libros_ibfk_1` FOREIGN KEY (`idColeccion`) REFERENCES `colecciones` (`idColeccion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `libros_ibfk_2` FOREIGN KEY (`idTitulo`) REFERENCES `titulos` (`idTitulo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `libros_ibfk_3` FOREIGN KEY (`idEditorial`) REFERENCES `editoriales` (`idEditorial`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `libros_ibfk_4` FOREIGN KEY (`idCarrera`) REFERENCES `carreras` (`idCarrera`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `libro_autor`
 --
 ALTER TABLE `libro_autor`
-  ADD CONSTRAINT `libro_autor_ibfk_1` FOREIGN KEY (`idLibro`) REFERENCES `libros` (`idLibro`),
-  ADD CONSTRAINT `libro_autor_ibfk_2` FOREIGN KEY (`idAutor`) REFERENCES `autores` (`idAutor`);
+  ADD CONSTRAINT `libro_autor_ibfk_1` FOREIGN KEY (`idLibro`) REFERENCES `libros` (`idLibro`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `libro_autor_ibfk_2` FOREIGN KEY (`idAutor`) REFERENCES `autores` (`idAutor`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  ADD CONSTRAINT `permisos_ibfk_1` FOREIGN KEY (`idCentroi`) REFERENCES `centroinformacion` (`idCentroi`);
+  ADD CONSTRAINT `permisos_ibfk_1` FOREIGN KEY (`idCentroi`) REFERENCES `centroinformacion` (`idCentroi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `solicitudusuario`
 --
 ALTER TABLE `solicitudusuario`
-  ADD CONSTRAINT `solicitudusuario_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`),
-  ADD CONSTRAINT `solicitudusuario_ibfk_2` FOREIGN KEY (`idSolicitud`) REFERENCES `solicitudes` (`idSolicitud`);
+  ADD CONSTRAINT `solicitudusuario_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `solicitudusuario_ibfk_2` FOREIGN KEY (`idSolicitud`) REFERENCES `solicitudes` (`idSolicitud`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`idCentroi`) REFERENCES `centroinformacion` (`idCentroi`),
-  ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`idCarrera`) REFERENCES `carreras` (`idCarrera`);
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`idCentroi`) REFERENCES `centroinformacion` (`idCentroi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`idCarrera`) REFERENCES `carreras` (`idCarrera`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
