@@ -39,7 +39,7 @@ $filas=mysqli_fetch_assoc($resultado);
   		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     	<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       		<li class="nav-item">
-        		<a class="nav-link" href="Usuarios.php"><i class="fa fa-user"></i> Carreras</a>
+        		<a class="nav-link" href="Carreras.php"><i class="fa fa-user"></i> Carreras</a>
       		</li>
     	</ul>
 		<ul>
@@ -70,7 +70,7 @@ $filas=mysqli_fetch_assoc($resultado);
 							<span class="texto"><h3>Modificar Carrera</h3> </span>
 							<br>
 							<form action="modif_carrera2.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">	  					
-								<input id="no" type="hidden" name="no" value="<?php echo $filas['no']?> ">
+								<!-- <input id="no" type="hidden" name="no" value="<?php echo $filas['no']?> "> -->
 								<input id="id" type="hidden" name="id" value="<?php echo $filas['idCarrera']?> ">
 								<label><strong>Nombre: </strong></label>
 								<input type="text" id="nombre" name="nombre" value="<?php echo $filas['nomCarrera'] ?>" required><br>

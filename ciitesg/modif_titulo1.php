@@ -70,7 +70,7 @@ $filas=mysqli_fetch_assoc($resultado);
 							<span class="texto"><h3>Modificar Título</h3> </span>
 							<br>
 							<form action="modif_titulo2.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">	  					
-								<input id="no" type="hidden" name="no" value="<?php echo $filas['no']?> ">
+								<!-- <input id="no" type="hidden" name="no" value="<?php echo $filas['no']?> "> -->
 								<input id="id" type="hidden" name="id" value="<?php echo $filas['idTitulo']?> ">
 								<label><strong>Nombre: </strong></label>
 								<input type="text" id="nombre" name="nombre" value="<?php echo $filas['nomTitulo'] ?>" class="col-10 form-control" required><br>

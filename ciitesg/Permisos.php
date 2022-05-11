@@ -28,7 +28,7 @@ if (!isset($_SESSION['username'])) {
 	<?php include("includes/estilos.php"); ?>
 	  
 	<!-- Pestaña -->
-    <title>Solicitudes</title>
+    <title>Permisos</title>
 	<link rel="icon" href="images/Escudo-ITESG.png" />
 </head>
 <body>
@@ -37,9 +37,9 @@ if (!isset($_SESSION['username'])) {
 	<!-- Menú -->
 	<?php include("includes/menu.php"); ?><br>
 	
-	<h1 align="center" class="texto">Solicitudes de credencial del Centro de Información</h1><br>	
+	<h1 align="center" class="texto">Control de accesos para SICI</h1><br>	
 
-	<form action="#sube.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">
+	<form action="nuevoPermiso.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog modal-lg">
@@ -51,23 +51,24 @@ if (!isset($_SESSION['username'])) {
       			<div class="modal-body" align="center">
 					<div class="todo">
   						<div id="contenido">  							
-  							<span> <h4 class="texto">Ingreso de nueva solicitud</h4> </span><br>
-							<form action="#sube.php" method="post" enctype="multipart/form-data">
-  								<label><strong>Folio: </strong></label>
+  							<span> <h4 class="texto">Ingreso de nuevo permiso</h4> </span><br>
+							<form action="nuevoPermiso.php" method="post" enctype="multipart/form-data">
+  								<label><strong>Nombre: </strong></label>
   								<input type="text" id="nombre" name="nombre" required><br>
-								<label><strong>Fecha: </strong></label>
+								<label><strong>Usuario: </strong></label>
   								<input type="text" id="user" name="user" required><br>
-								<label><strong>Tipo de solicitud: </strong></label>
-								<select id="tipo" name="tipo" class="form-control col-3" required>
+								<label><strong>Contraseña: </strong></label>
+  								<input type="password" id="pw" name="pw" required><br>
+								<label><strong>Tipo de usuario:</strong></label>
+    							<select id="tipo" name="tipo" class="form-control col-3" required>
 									<option>Selecciona...</option>
-      								<option>Primera vez</option>
-      								<option>Reposición</option>
-    							</select>
-								<label><strong>Estado de solicitud:</strong></label>
-    							<input type="text" id="pw" name="pw" required><br>
+      								<option>Administrador</option>
+      								<option>Editor</option>
+      								<option>Consultor</option>
+    							</select>	
 								<br>
-								<label><strong>Vigencia:</strong></label>
-								<input type="text" id="pw" name="pw" required><br>
+								<label><strong>Foto:</strong></label>
+									<input type="file" name="archivo" accept=".jpg, .jpeg, .png" required>
 								<br><br>
   								<button type="submit" class="btn btn-outline-success">Guardar</button>
      						</form>
@@ -94,37 +95,33 @@ if (!isset($_SESSION['username'])) {
   	 						<table class="table table-sm table-striped table-hover">
   								<thead>
   									<th class="texto">No.</th>
-									<th class="texto">Folio</th>
-  									<th class="texto">Fecha</th>
-  									<th class="texto">Tipo</th>
-									<th class="texto">Estado de solicitud</th>
-									<th class="texto">Vigencia</th>
+									<th class="texto">Foto</th>
+  									<th class="texto">Nombre</th>
+  									<th class="texto">Usuario</th>
+									<th class="texto">Tipo de usuario</th>
 									<!-- Button trigger modal -->
   									<th><button type="button" class="btn btn-outline-success" title="Nuevo" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button></th>
-									<th><elemento class="oculto-impresion"><a href='#.php'><button type='button' class='btn btn-outline-info' title="Cargar"><i class='fa fa-level-up'></i></button></a></elemento></th>
-									<th class="texto"><elemento class="oculto-impresion"><button type='button' class='btn btn-outline-danger' title="PDF"><i class='fa fa-file-pdf-o' onclick="imprimir()"></i></button></elemento></th>
+									<th class="texto"></th>
   								</thead>
 								<!--<tbody>-->
   								<?php
       							include "conexion.php";
-      							$sentencia="SELECT idSolicitud, folioSolicitud, fechaSolicitud, tipoSolicitud, estatusSolicitud, vigenciaSolicitud FROM `solicitudes`";
+      							$sentencia="SELECT idPermiso, nombre, usuario, tipo, foto FROM `permisos`";
 	  							$resultado = mysqli_query(Conectarse(),$sentencia);
 								$no=1;
       							while($filas=mysqli_fetch_assoc($resultado))
       							{
 									//$no=$no+1;
         							echo "<tr>";
-          								echo "<td style='Display:None;'>"; echo $filas['idSolicitud']; echo "</td>";
+          								echo "<td style='Display:None;'>"; echo $filas['idPermiso']; echo "</td>";
 										echo "<td>"; echo $no; echo "</td>";
-										echo "<td>"; echo $filas['folioSolicitud']; echo "</td>";
-          								echo "<td>"; echo $filas['fechaSolicitud']; echo "</td>";
-          								echo "<td>"; echo $filas['tipoSolicitud']; echo "</td>";
-		  								echo "<td>"; echo $filas['estatusSolicitud']; echo "</td>";
-										echo "<td>"; echo $filas['vigenciaSolicitud']; echo "</td>";
+										echo "<td><div id='container'><img src='"; echo $filas['foto']; echo "' alt='Foto' title='Foto'/></div></td>";
+          								echo "<td>"; echo $filas['nombre']; echo "</td>";
+          								echo "<td>"; echo $filas['usuario']; echo "</td>";
+		  								echo "<td>"; echo $filas['tipo']; echo "</td>";
 										//echo "<img src='"; echo $filas['fotoUsuario']; echo "'/>";
-										echo "<td></td>";
-          								echo "<td><a href='#modif_usu1.php?no=".$filas['idSolicitud']."'> <button type='button' class='btn btn-outline-warning' title='Modificar'><i class='fa fa-pencil-square-o'></i></button></a></td>"; 
-										echo "<td><a onclick='return confirmDelete();' href='#eliminar_usu.php?no=".$filas['idSolicitud']."''><button type='button' class='btn btn-outline-danger' title='Eliminar'><i class='fa fa-trash'></i></button></a></td>";
+          								echo "<td><a href='modif_permiso1.php?no=".$filas['idPermiso']."'> <button type='button' class='btn btn-outline-warning' title='Modificar'><i class='fa fa-pencil-square-o'></i></button></a></td>"; 
+										echo "<td><a onclick='return confirmDelete();' href='eliminar_permiso.php?no=".$filas['idPermiso']."''><button type='button' class='btn btn-outline-danger' title='Eliminar'><i class='fa fa-trash'></i></button></a></td>";
         							echo "</tr>";	
 									$no++;
       							}
@@ -150,7 +147,7 @@ if (!isset($_SESSION['username'])) {
 
 <script type="text/javascript">
 	function confirmDelete() {
-		var confirmar = confirm("¿Realmente desea eliminar la solicitud? ");
+		var confirmar = confirm("¿Realmente desea eliminar el permiso? ");
         if (confirmar) {
                 return true;
         } else {

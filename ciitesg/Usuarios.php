@@ -28,7 +28,7 @@ if (!isset($_SESSION['username'])) {
 	<?php include("includes/estilos.php"); ?>
 	  
 	<!-- Pestaña -->
-    <title>Permisos</title>
+    <title>Usuarios</title>
 	<link rel="icon" href="images/Escudo-ITESG.png" />
 </head>
 <body>
@@ -37,9 +37,9 @@ if (!isset($_SESSION['username'])) {
 	<!-- Menú -->
 	<?php include("includes/menu.php"); ?><br>
 	
-	<h1 align="center" class="texto">Permisos en el Centro de Información</h1><br>	
+	<h1 align="center" class="texto">Usuarios en el Centro de Información</h1><br>	
 
-	<form action="nuevoPermiso.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">
+	<form action="nuevoUsuario.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   		<div class="modal-dialog modal-lg">
@@ -51,25 +51,43 @@ if (!isset($_SESSION['username'])) {
       			<div class="modal-body" align="center">
 					<div class="todo">
   						<div id="contenido">  							
-  							<span> <h4 class="texto">Ingreso de nuevo permiso</h4> </span><br>
-							<form action="nuevoPermiso.php" method="post" enctype="multipart/form-data">
-  								<label><strong>Nombre: </strong></label>
+  							<span> <h4 class="texto">Ingreso de nuevo usuario</h4> </span><br>
+							<form action="nuevoUsuario.php" method="post" enctype="multipart/form-data">
+  								<label><strong>Número de control: </strong></label>
+  								<input type="text" id="ncontrol" name="ncontrol" required>
+								<label><strong>Nombre: </strong></label>
   								<input type="text" id="nombre" name="nombre" required><br>
-								<label><strong>Usuario: </strong></label>
-  								<input type="text" id="user" name="user" required><br>
-								<label><strong>Contraseña: </strong></label>
-  								<input type="password" id="pw" name="pw" required><br>
+								<label><strong>Paterno: </strong></label>
+  								<input type="text" id="paterno" name="paterno" required>
+								<label><strong>Materno: </strong></label>
+  								<input type="text" id="materno" name="materno" required><br>
 								<label><strong>Tipo de usuario:</strong></label>
     							<select id="tipo" name="tipo" class="form-control col-3" required>
 									<option>Selecciona...</option>
-      								<option>Administrador</option>
-      								<option>Editor</option>
-      								<option>Consultor</option>
-    							</select>	
-								<br>
-								<label><strong>Foto:</strong></label>
-									<input type="file" name="archivo" required>
-								<br><br>
+      								<option>Administrativo</option>
+      								<option>Docente</option>
+      								<option>Alumno</option>
+    							</select><br>
+								<label><strong>Carrera:</strong></label>
+    							<select id="carrera" name="carrera" class="form-control col-3" required>
+									<option>Selecciona...</option>
+      								<option>Sistemas</option>
+      								<option>Alimentarias</option>
+      								<option>Mecatrónica</option>
+									<option>Industrial</option>
+									<option>Gestión</option>
+									<option>N/A</option>
+    							</select><br>
+								<label><strong>Correo:</strong></label>
+								<input type="text" id="correo" name="correo" required>
+								<label><strong>CURP:</strong></label>
+								<input type="text" id="curp" name="curp" required><br>
+								<label><strong>Teléfono:</strong></label>
+								<input type="text" id="tel" name="tel" required>
+								<label><strong>Estatus:</strong></label>
+								<input type="text" id="status" name="status" required><br>
+								<label><strong>Dirección:</strong></label>
+								<input type="text" id="dir" name="dir" required><br>
   								<button type="submit" class="btn btn-outline-success">Guardar</button>
      						</form>
   						</div>
@@ -95,33 +113,37 @@ if (!isset($_SESSION['username'])) {
   	 						<table class="table table-sm table-striped table-hover">
   								<thead>
   									<th class="texto">No.</th>
-									<th class="texto">Foto</th>
+									<!-- <th class="texto">Foto</th> -->
+									<th class="texto">Número de control</th>
   									<th class="texto">Nombre</th>
-  									<th class="texto">Usuario</th>
-									<th class="texto">Tipo de usuario</th>
+									<th class="texto">Paterno</th>
+									<th class="texto">Estatus</th>
 									<!-- Button trigger modal -->
-  									<th><button type="button" class="btn btn-outline-success" title="Nuevo" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button></th>
-									<th class="texto"></th>
+  									<th><elemento class="oculto-impresion"><button type="button" class="btn btn-outline-success" title="Nuevo" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button></elemento></th>
+									<th><elemento class="oculto-impresion"><a href='CargaUsuarios.php'><button type='button' class='btn btn-outline-info' title="Cargar"><i class='fa fa-level-up'></i></button></a></elemento></th>
+									<th class="texto"><elemento class="oculto-impresion"><button type='button' class='btn btn-outline-danger' title="PDF"><i class='fa fa-file-pdf-o' onclick="imprimir()"></i></button></elemento></th>
   								</thead>
 								<!--<tbody>-->
   								<?php
       							include "conexion.php";
-      							$sentencia="SELECT idPermiso, nombre, usuario, tipo, foto FROM `permisos`";
+      							$sentencia="SELECT idUsuario, noControl, nomUsuario, paternoUsuario, estatusUsuario FROM `usuarios`";
 	  							$resultado = mysqli_query(Conectarse(),$sentencia);
 								$no=1;
       							while($filas=mysqli_fetch_assoc($resultado))
       							{
 									//$no=$no+1;
         							echo "<tr>";
-          								echo "<td style='Display:None;'>"; echo $filas['idPermiso']; echo "</td>";
+          								echo "<td style='Display:None;'>"; echo $filas['idUsuario']; echo "</td>";
 										echo "<td>"; echo $no; echo "</td>";
-										echo "<td><div id='container'><img src='"; echo $filas['foto']; echo "' alt='Foto' title='Foto'/></div></td>";
-          								echo "<td>"; echo $filas['nombre']; echo "</td>";
-          								echo "<td>"; echo $filas['usuario']; echo "</td>";
-		  								echo "<td>"; echo $filas['tipo']; echo "</td>";
+										//echo "<td><div id='container'><img src='"; echo $filas['fotoUsuario']; echo "' alt='Foto' title='Foto'/></div></td>";
+          								echo "<td>"; echo $filas['noControl']; echo "</td>";
+          								echo "<td>"; echo $filas['nomUsuario']; echo "</td>";
+		  								echo "<td>"; echo $filas['paternoUsuario']; echo "</td>";
+										echo "<td>"; echo $filas['estatusUsuario']; echo "</td>";
 										//echo "<img src='"; echo $filas['fotoUsuario']; echo "'/>";
-          								echo "<td><a href='modif_usu1.php?no=".$filas['idPermiso']."'> <button type='button' class='btn btn-outline-warning' title='Modificar'><i class='fa fa-pencil-square-o'></i></button></a></td>"; 
-										echo "<td><a onclick='return confirmDelete();' href='eliminar_usu.php?no=".$filas['idPermiso']."''><button type='button' class='btn btn-outline-danger' title='Eliminar'><i class='fa fa-trash'></i></button></a></td>";
+          								echo "<td><elemento class='oculto-impresion'><a href='modif_usu1.php?no=".$filas['idUsuario']."'> <button type='button' class='btn btn-outline-warning' title='Modificar'><i class='fa fa-pencil-square-o'></i></button></a></elemento></td>"; 
+										echo "<td><elemento class='oculto-impresion'><a href='#.php?no=".$filas['idUsuario']."'> <button type='button' class='btn btn-outline-dark' title='Código de barras'><i class='fa fa-barcode'></i></button></a></elemento></td>";
+										echo "<td><elemento class='oculto-impresion'><a onclick='return confirmDelete();' href='eliminar_usu.php?no=".$filas['idUsuario']."''><button type='button' class='btn btn-outline-danger' title='Eliminar'><i class='fa fa-trash'></i></button></a></elemento></td>";
         							echo "</tr>";	
 									$no++;
       							}
@@ -144,6 +166,12 @@ if (!isset($_SESSION['username'])) {
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
+
+<script>
+	function imprimir() {
+  		window.print();
+	}	
+</script>
 
 <script type="text/javascript">
 	function confirmDelete() {

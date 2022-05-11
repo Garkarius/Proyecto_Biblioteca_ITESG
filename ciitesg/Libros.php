@@ -257,11 +257,12 @@ $query= mysqli_query(Conectarse(), $sentencia2);
 									<th class="texto">Edición</th>
 									<th class="texto">Ejemplar</th>
 									<th class="texto">Disponibilidad</th>
+									<th></th>
 									<!-- Button trigger modal -->
-  									<th><elemento class="oculto-impresion"><button type="button" class="btn btn-outline-success" title="Agregar" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button></elemento></th>
+  									<th><elemento class="oculto-impresion"><button type="button" class="btn btn-outline-success" title="Nuevo" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button></elemento></th>
 									<th><elemento class="oculto-impresion"><a href='#.php'><button type='button' class='btn btn-outline-info' title="Cargar"><i class='fa fa-level-up'></i></button></a></elemento></th>
 									<th class="texto"><elemento class="oculto-impresion"><button type='button' class='btn btn-outline-danger' title="PDF"><i class='fa fa-file-pdf-o' onclick="imprimir()"></i></button></elemento></th>
-									<th><elemento class="oculto-impresion"><a href='#.php'><button type='button' class='btn btn-outline-dark' title="Código de barras"><i class='fa fa-barcode'></i></button></a></elemento></th>
+									<!--<th><elemento class="oculto-impresion"><a href='#.php'><button type='button' class='btn btn-outline-dark' title="Código de barras"><i class='fa fa-barcode'></i></button></a></elemento></th>-->
   								</thead>
 								<!--<tbody>-->
   								<?php				

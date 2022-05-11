@@ -1,5 +1,5 @@
-<?php 
-//images/FotoPerfil.png
+<?php
+//Guarda foto
 $nombre=$_FILES['archivo']['name'];
 $guardado=$_FILES['archivo']['tmp_name'];
 
@@ -19,19 +19,18 @@ if(!file_exists('fotos')){
 		//echo "Archivo no se pudo guardar";
 	}
 }
-
 	include 'conexion.php';
 
-	NuevoPermiso($_POST['nombre'], $_POST['user'], $_POST['pw'], $_POST['tipo'], $_FILES['archivo']['name']);
+ModificarUsuario($_POST['nombre'], $_POST['user'], $_POST['pw'], $_POST['tipo'], $_FILES['archivo']['name'], $_POST['id']);
 
-	function NuevoPermiso($nom, $user, $pw, $tipo, $nombre)
+	function ModificarUsuario($nom, $user, $pw, $tipo, $foto, $id)
 	{
-		$sentencia="INSERT INTO permisos (nombre, usuario, pw, tipo, foto, idCentroi) VALUES ('".$nom."', '".$user."', '".$pw."', '".$tipo."', '".'fotos/'.$nombre."', '1')";
+		$sentencia="UPDATE permisos SET nombre= '".$nom."', usuario='".$user."', pw='".$pw."', tipo='".$tipo."', foto='".'fotos/'.$foto."' WHERE idPermiso='".$id."'";
 		$resultado = mysqli_query(Conectarse(), $sentencia);
-	}
+}
 ?>
 
 <script type="text/javascript">
-	/*alert("Permiso Ingresado exitosamente");*/
+	/*alert("Usuario Modificado exitosamente");*/
 	window.location.href='Permisos.php';
 </script>

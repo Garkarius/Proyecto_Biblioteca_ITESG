@@ -3,7 +3,7 @@
 session_start();
 $usuario = $_SESSION['username'];
 if (!isset($_SESSION['username'])) {
-    header('location: Login.php');
+   header('location: Login.php');
 }
 ?>
 
@@ -29,7 +29,7 @@ if (!isset($_SESSION['username'])) {
 	<?php include("includes/estilos.php"); ?>
 	  
     <!-- Pestaña -->
-	<title>Inicio CI_ITESG</title>
+	<title>SICI_ITESG</title>
 	<link rel="icon" href="images/Escudo-ITESG.png" />
   </head>
 	
@@ -38,11 +38,13 @@ if (!isset($_SESSION['username'])) {
 	  <!-- Menú -->
 	  <?php include("includes/menu.php"); ?><br>
 	  
+	  <h1 align="center" class="texto">Sistema Integral del Centro de Información</h1><br>
+
 	  <!-- Logo ITESG -->
 	  <div class="logo">
 		<div class="row">
 			<div class="col-2 col-sm-2 col-md-3 col-lg-4 col-xl-4" align="center"></div>
-		  	<div class="col-8 col-sm-8 col-md-6 col-lg-4 col-xl-4" align="center"><img class="img-fluid" src="images/logoITESG.png" style="width: 80%; margin-top: 30px;"/></div>
+		  	<div class="col-8 col-sm-8 col-md-6 col-lg-4 col-xl-4" align="center"><img class="img-fluid" src="images/logoITESG.png" style="width: 60%; margin-top: 3px;"/></div>
 		  	<div class="col-2 col-sm-2 col-md-3 col-lg-4 col-xl-4" align="center"></div>
 		</div>
 	  </div>
@@ -62,13 +64,13 @@ if (!isset($_SESSION['username'])) {
 			<div class="col-3"></div>
 			<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" align="center"><a href="#.php" class="btn btn-outline-danger" style="width: 100%;" role="button"><i class="fa fa-bullseye fa-5x"></i><br><br>CD´S</a></div>
 			<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" align="center"><a href="#.php" class="btn btn-outline-warning" style="width: 100%;" role="button"><i class="fa fa-gamepad fa-5x"></i><br><br>Juegos</a></div>
-			<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" align="center"><a href="UsuariosCI.php" class="btn btn-outline-info" style="width: 100%;" role="button"><i class="fa fa-users fa-5x"></i><br><br>Usuarios</a></div>
+			<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" align="center"><a href="Usuarios.php" class="btn btn-outline-info" style="width: 100%;" role="button"><i class="fa fa-users fa-5x"></i><br><br>Usuarios</a></div>
 		  </div>
 		  <br>
 		  <div class="row">
 			<div class="col-3"></div>
 			<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" align="center"><a href="Solicitudes.php" class="btn btn-outline-success" style="width: 100%;" role="button"><i class="fa fa-sign-in fa-5x"></i><br><br>Solicitudes</a></div>
-			<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" align="center"><a href="#Prestamos.php" class="btn btn-outline-primary" style="width: 100%;" role="button"><i class="fa fa-handshake-o fa-5x"></i><br><br>Préstamos</a></div>
+			<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" align="center"><a href="#.php" class="btn btn-outline-primary" style="width: 100%;" role="button"><i class="fa fa-handshake-o fa-5x"></i><br><br>Préstamos</a></div>
 			<div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" align="center"><a href="#.php" class="btn btn-outline-dark" style="width: 100%;" role="button"><i class="fa fa-chain-broken fa-5x"></i><br><br>Adeudos</a></div>
 		  </div>
 	  </div>
@@ -81,6 +83,18 @@ if (!isset($_SESSION['username'])) {
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
+
+<script>
+  //Cuando la página esté cargada completamente
+  $(document).ready(function(){
+    //Cada x segundos se ejecutará la función refrescar
+    setTimeout(refrescar, 1200000);	//20 min
+  });
+  function refrescar(){
+    //Actualiza la página
+    location.reload();
+  }
+</script>
 
 <script>
 $(function() {

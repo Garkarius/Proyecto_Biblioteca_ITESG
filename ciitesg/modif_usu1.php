@@ -5,7 +5,7 @@ $usuario = $_SESSION['username'];
 
 include 'conexion.php';
 
-$sentencia="SELECT * FROM `permisos` WHERE idPermiso='".$_GET['no']."' ";
+$sentencia="SELECT * FROM `usuarios` WHERE idUsuario='".$_GET['no']."' ";
 $resultado = mysqli_query(Conectarse(), $sentencia);
 $filas=mysqli_fetch_assoc($resultado);
 ?>
@@ -70,30 +70,48 @@ $filas=mysqli_fetch_assoc($resultado);
 							<span class="texto"><h3>Modificar Usuario</h3> </span>
 							<br>
 							<form action="modif_usu2.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">	  					
-								<input id="no" type="hidden" name="no" value="<?php echo $filas['no']?> ">
-								<input id="id" type="hidden" name="id" value="<?php echo $filas['idPermiso']?> ">
+								<!-- <input id="no" type="hidden" name="no" value="<?php echo $filas['no']?> "> -->
+								<input id="id" type="hidden" name="id" value="<?php echo $filas['idUsuario']?> ">
+								<label><strong>Númeo de control: </strong></label>
+								<input type="text" id="ncontrol" name="ncontrol" value="<?php echo $filas['noControl'] ?>" required><br>
 								<label><strong>Nombre: </strong></label>
-								<input type="text" id="nombre" name="nombre" value="<?php echo $filas['nombre'] ?>" required><br>
-								<label><strong>Usuario: </strong></label>
-								<input type="text" id="user" name="user" value="<?php echo $filas['usuario'] ?>" required><br>
-								<label><strong>Contraseña: </strong></label>
-								<input type="password" id="pw" name="pw" value="<?php echo $filas['pw'] ?>" required><br>
+								<input type="text" id="nombre" name="nombre" value="<?php echo $filas['nomUsuario'] ?>" required><br>
+								<label><strong>Paterno: </strong></label>
+								<input type="text" id="paterno" name="paterno" value="<?php echo $filas['paternoUsuario'] ?>" required><br>
+								<label><strong>Materno: </strong></label>
+								<input type="text" id="materno" name="materno" value="<?php echo $filas['maternoUsuario'] ?>" required><br>
 								<label><strong>Tipo de usuario:</strong></label>
-								<select id="tipo" name="tipo" class="form-control col-3" value="<?php echo $filas['tipo'] ?>">
-									<option><?php echo $filas['tipo'] ?></option>
+    							<select id="tipo" name="tipo" class="form-control col-3" value="<?php echo $filas['tipoUsuario'] ?>">
+									<option><?php echo $filas['tipoUsuario'] ?></option>
 									<option>Administrador</option>
 									<option>Editor</option>
 									<option>Consultor</option>
 								</select>
-								<br>
-								<label><strong>Foto:</strong></label>
-										<input type="file" name="archivo">
-									<br><br>
-								<!--<input type="file" class="form-control col-6" id="image" name="image" accept="image/png, .jpeg, .jpg, image/gif" multiple required>-->
-							<br>
+								<label><strong>Carrera: </strong></label>
+								<select id="carrera" name="carrera" class="form-control col-3" value="<?php echo $filas['idCarrera'] ?>">
+									<option><?php echo $filas['idCarrera'] ?></option>
+									<option>1</option>
+      								<option>2</option>
+      								<option>3</option>
+									<option>4</option>
+									<option>5</option>
+									<option>6</option>
+								</select>
+								<label><strong>Correo: </strong></label>
+								<input type="text" id="correo" name="correo" value="<?php echo $filas['mailUsuario'] ?>" required><br>
+								<label><strong>CURP: </strong></label>
+								<input type="text" id="curp" name="curp" value="<?php echo $filas['curpUsuario'] ?>" required><br>
+								<label><strong>Teléfono: </strong></label>
+								<input type="text" id="tel" name="tel" value="<?php echo $filas['telUsuario'] ?>" required><br>
+								<label><strong>Estatus: </strong></label>
+								<input type="text" id="status" name="status" value="<?php echo $filas['estatusUsuario'] ?>" required><br>
+								<label><strong>Dirección: </strong></label>
+								<input type="text" id="dir" name="dir" value="<?php echo $filas['dirUsuario'] ?>" required><br>
+								<br><br>
 							<button type="submit" class="btn btn-outline-success">Modificar</button>
 							<a href="Usuarios.php" class="btn btn-outline-secondary"> Cancelar</a>
 							</form>
+						</div>
 						</div>
 					</div>
 				</div>

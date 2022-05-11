@@ -5,7 +5,7 @@ NuevaColeccion($_POST['nombre'], $_POST['desc']);
 
 function NuevaColeccion($nom, $desc)
 {
-	$sentencia="INSERT INTO colecciones (nomColeccion, descColeccion) VALUES ('".$nom."', '".$desc."')";
+	$sentencia="INSERT INTO colecciones (nomColeccion, descColeccion, idCentroi) VALUES ('".$nom."', '".$desc."', '1')";
 	$resultado = mysqli_query(Conectarse(), $sentencia);
 }
 ?>

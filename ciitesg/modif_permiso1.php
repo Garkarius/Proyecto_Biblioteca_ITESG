@@ -5,7 +5,7 @@ $usuario = $_SESSION['username'];
 
 include 'conexion.php';
 
-$sentencia="SELECT * FROM `editoriales` WHERE idEditorial='".$_GET['no']."' ";
+$sentencia="SELECT * FROM `permisos` WHERE idPermiso='".$_GET['no']."' ";
 $resultado = mysqli_query(Conectarse(), $sentencia);
 $filas=mysqli_fetch_assoc($resultado);
 ?>
@@ -26,7 +26,7 @@ $filas=mysqli_fetch_assoc($resultado);
 	<?php include("includes/estilos.php"); ?>
 	  
 	<!-- Pestaña -->
-    <title>Editoriales</title>
+    <title>Permisos CI</title>
 	<link rel="icon" href="images/Escudo-ITESG.png" />
 
 </head>
@@ -39,7 +39,7 @@ $filas=mysqli_fetch_assoc($resultado);
   		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     	<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       		<li class="nav-item">
-        		<a class="nav-link" href="Editoriales.php"><i class="fa fa-user"></i> Editoriales</a>
+        		<a class="nav-link" href="Permisos.php"><i class="fa fa-upload"></i> Permisos</a>
       		</li>
     	</ul>
 		<ul>
@@ -67,20 +67,33 @@ $filas=mysqli_fetch_assoc($resultado);
 							<div class="spur-card-title font-weight-bold"></div>
 						</div>
 						<div class="card-body">
-							<span class="texto"><h3>Modificar Editorial</h3> </span>
+							<span class="texto"><h3>Modificar Permiso</h3> </span>
 							<br>
-							<form action="modif_editorial2.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">	  					
-								<!-- <input id="no" type="hidden" name="no" value="<?php echo $filas['no']?> "> -->
-								<input id="id" type="hidden" name="id" value="<?php echo $filas['idEditorial']?> ">
+							<!--hidden-->
+							<form action="modif_permiso2.php" method="post" enctype="multipart/form-data" style="border-collapse: separate; border-spacing: 10px 5px;">	  					
+								<!--<input id="no" type="text" name="no" value="<?php echo $filas['no']?> ">-->
+								<input id="id" type="hidden" name="id" value="<?php echo $filas['idPermiso']?> ">
 								<label><strong>Nombre: </strong></label>
-								<input type="text" id="nombre" name="nombre" value="<?php echo $filas['nomEditorial'] ?>" required><br>
-								<label><strong>País: </strong></label>
-								<input type="text" id="pais" name="pais" value="<?php echo $filas['paisEditorial'] ?>" required><br>
-								<label><strong>Descripción: </strong></label>
-								<input type="text" id="desc" name="desc" value="<?php echo $filas['descEditorial'] ?>" required><br>
-								<br><br>
+								<input type="text" id="nombre" name="nombre" value="<?php echo $filas['nombre'] ?>" required><br>
+								<label><strong>Usuario: </strong></label>
+								<input type="text" id="user" name="user" value="<?php echo $filas['usuario'] ?>" required><br>
+								<label><strong>Contraseña: </strong></label>
+								<input type="password" id="pw" name="pw" value="<?php echo $filas['pw'] ?>" required><br>
+								<label><strong>Tipo de usuario:</strong></label>
+								<select id="tipo" name="tipo" class="form-control col-3" value="<?php echo $filas['tipo'] ?>">
+									<option><?php echo $filas['tipo'] ?></option>
+									<option>Administrador</option>
+									<option>Editor</option>
+									<option>Consultor</option>
+								</select>
+								<br>
+								<label><strong>Foto:</strong></label>
+										<input type="file" id="imagen" name="imagen" value="<?php echo $filas['foto'] ?>" accept=".jpg, .jpeg, .png">
+									<br><br>
+								<!--<input type="file" class="form-control col-6" id="image" name="image" accept="image/png, .jpeg, .jpg, image/gif" multiple required>-->
+							<br>
 							<button type="submit" class="btn btn-outline-success">Modificar</button>
-							<a href="Editoriales.php" class="btn btn-outline-secondary"> Cancelar</a>
+							<a href="Permisos.php" class="btn btn-outline-secondary"> Cancelar</a>
 							</form>
 						</div>
 					</div>

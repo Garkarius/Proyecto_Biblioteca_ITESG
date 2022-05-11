@@ -88,7 +88,7 @@
 	<div class="logo">
 		<div class="row">
 			<div class="col-2 col-sm-2 col-md-3 col-lg-4 col-xl-4" align="center"></div>
-		  	<div class="col-8 col-sm-8 col-md-6 col-lg-4 col-xl-4" align="center"><img class="img-fluid" src="images/logoITESG_top.png" style="width: 60%; margin-top: 50px;"/></div>
+		  	<div class="col-8 col-sm-8 col-md-6 col-lg-4 col-xl-4" align="center"><img class="img-fluid" src="images/LogoITESG.png" style="width: 60%; margin-top: 50px;"/></div>
 		  	<div class="col-2 col-sm-2 col-md-3 col-lg-4 col-xl-4" align="center"></div>
 		</div>
 	</div>
