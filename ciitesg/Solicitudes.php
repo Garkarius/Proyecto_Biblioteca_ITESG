@@ -64,10 +64,14 @@ if (!isset($_SESSION['username'])) {
       								<option>Reposición</option>
     							</select>
 								<label><strong>Estado de solicitud:</strong></label>
-    							<input type="text" id="pw" name="pw" required><br>
+								<select id="pw" name="pw" class="form-control col-3" required>
+									<option>Selecciona...</option>
+      								<option>En proceso</option>
+      								<option>Atendida</option>
+    							</select>
 								<br>
 								<label><strong>Vigencia:</strong></label>
-								<input type="text" id="pw" name="pw" required><br>
+								<input type="date" id="vigencia" name="vigencia" required><br>
 								<br><br>
   								<button type="submit" class="btn btn-outline-success">Guardar</button>
      						</form>
@@ -100,8 +104,8 @@ if (!isset($_SESSION['username'])) {
 									<th class="texto">Estado de solicitud</th>
 									<th class="texto">Vigencia</th>
 									<!-- Button trigger modal -->
-  									<th><button type="button" class="btn btn-outline-success" title="Nuevo" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button></th>
-									<th><elemento class="oculto-impresion"><a href='#.php'><button type='button' class='btn btn-outline-info' title="Cargar"><i class='fa fa-level-up'></i></button></a></elemento></th>
+  									<th><elemento class='oculto-impresion'><button type="button" class="btn btn-outline-success" title="Nuevo" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button></th>
+									<th><elemento class="oculto-impresion"><a href='CargaSolicitudes.php'><button type='button' class='btn btn-outline-info' title="Cargar"><i class='fa fa-level-up'></i></button></a></elemento></th>
 									<th class="texto"><elemento class="oculto-impresion"><button type='button' class='btn btn-outline-danger' title="PDF"><i class='fa fa-file-pdf-o' onclick="imprimir()"></i></button></elemento></th>
   								</thead>
 								<!--<tbody>-->
@@ -123,8 +127,8 @@ if (!isset($_SESSION['username'])) {
 										echo "<td>"; echo $filas['vigenciaSolicitud']; echo "</td>";
 										//echo "<img src='"; echo $filas['fotoUsuario']; echo "'/>";
 										echo "<td></td>";
-          								echo "<td><a href='#modif_usu1.php?no=".$filas['idSolicitud']."'> <button type='button' class='btn btn-outline-warning' title='Modificar'><i class='fa fa-pencil-square-o'></i></button></a></td>"; 
-										echo "<td><a onclick='return confirmDelete();' href='#eliminar_usu.php?no=".$filas['idSolicitud']."''><button type='button' class='btn btn-outline-danger' title='Eliminar'><i class='fa fa-trash'></i></button></a></td>";
+          								echo "<td><elemento class='oculto-impresion'><a href='#modif_usu1.php?no=".$filas['idSolicitud']."'> <button type='button' class='btn btn-outline-warning' title='Modificar'><i class='fa fa-pencil-square-o'></i></button></a></elemento></td>"; 
+										echo "<td><elemento class='oculto-impresion'><a onclick='return confirmDelete();' href='#eliminar_usu.php?no=".$filas['idSolicitud']."''><button type='button' class='btn btn-outline-danger' title='Eliminar'><i class='fa fa-trash'></i></button></a></elemento></td>";
         							echo "</tr>";	
 									$no++;
       							}
@@ -147,6 +151,12 @@ if (!isset($_SESSION['username'])) {
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
+
+<script>
+	function imprimir() {
+  		window.print();
+	}	
+</script>
 
 <script type="text/javascript">
 	function confirmDelete() {

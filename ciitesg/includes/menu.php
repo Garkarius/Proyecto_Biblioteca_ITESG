@@ -17,7 +17,7 @@ if (!isset($_SESSION['username'])) {
         		<a class="nav-link" href="Inicio.php"><i class="fa fa-home"></i> Inicio</a>
       		</li>
       		<li class="nav-item">
-        		<a class="nav-link" href="Usuarios.php"><i class="fa fa-upload"></i> Permisos</a>
+        		<a class="nav-link" href="Permisos.php"><i class="fa fa-upload"></i> Permisos</a>
       		</li>
 			<li class="nav-item dropdown">
         		<a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-text-o"></i> Material CI</a>
